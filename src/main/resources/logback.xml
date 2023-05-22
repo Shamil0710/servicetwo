@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Define a JDBC Appender -->
+    <appender name="JDBC" class="ch.qos.logback.classic.db.DBAppender">
+        <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+            <url>jdbc:postgresql://localhost:5432/neeastestdb</url>
+            <driverClass>org.postgresql.Driver</driverClass>
+            <user>admin</user>
+            <password>admin</password>
+        </connectionSource>
+        <sqlDialect class="ch.qos.logback.core.db.dialect.PostgreSQLDialect" />
+    </appender>
+
+    <!-- Define a logger that will be written to the database -->
+    <logger name="org.springframework" level="debug" additivity="false">
+        <appender-ref ref="JDBC" />
+    </logger>
+
+    <!-- Define the root logger -->
+    <root level="INFO">
+        <appender-ref ref="JDBC" />
+    </root>
+
+</configuration>

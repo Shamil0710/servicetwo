@@ -14,7 +14,7 @@ public class Status {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "service_id")
+    @Column(name = "service_id", unique = true, nullable = false)
     private Long serviceId;
 
     @Column(name = "service_status")
