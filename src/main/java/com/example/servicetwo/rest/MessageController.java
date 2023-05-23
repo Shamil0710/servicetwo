@@ -43,7 +43,7 @@ public class MessageController {
         messageService.putMessage(message);
     }
 
-    @DeleteMapping("/mesage/{id}")
+    @DeleteMapping("/message/{id}")
     @Operation(summary = "Delete message by id")
     public ResponseEntity<Void> deleteMessageById(@PathVariable Long id) {
         messageService.deleteMessageById(id);
@@ -58,7 +58,7 @@ public class MessageController {
 
     @DeleteMapping("/service/{id}")
     @Operation(summary = "Delete service by id")
-    public ResponseEntity<Void> deleteServiceById(Long id) {
+    public ResponseEntity<Void> deleteServiceById(@PathVariable Long id) {
         messageService.deleteServiceById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
