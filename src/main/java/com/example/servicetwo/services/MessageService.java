@@ -4,7 +4,6 @@ import com.example.servicetwo.entites.Message;
 import com.example.servicetwo.entites.Status;
 import com.example.servicetwo.repositorys.MessageRepository;
 import com.example.servicetwo.repositorys.StatusRepository;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,8 @@
 package com.example.servicetwo.entites;
 
-import jakarta.annotation.Nonnull;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
+import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +15,7 @@ public class Message {
     @Column(name = "message_id")
     private Long messageId;
 
-    @Nonnull
+    @NonNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id")
     private Status serviceId;
