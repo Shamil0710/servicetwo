@@ -25,8 +25,8 @@ public class MessageController {
     }
 
     @GetMapping()
-    @Operation(summary = "Get all messages")
-    public List<Status> getAllMessages() {
+    @Operation(summary = "Get all Services")
+    public List<Status> getAllServices() {
         return messageService.getAllRegisteredServices();
     }
 
