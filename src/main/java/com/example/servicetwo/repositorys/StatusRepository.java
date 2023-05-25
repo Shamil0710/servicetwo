@@ -12,4 +12,5 @@ public interface StatusRepository extends JpaRepository<Status, Long> {
 
     @Query("SELECT DISTINCT s.serviceId FROM Status s WHERE s.serviceStatus = 'activity'")
     List<Long> getServiceIdsWithActivityStatus();
+    void deleteStatusByServiceId(Long id);
 }
