@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,14 @@ public class MessageService {
     public MessageService(StatusRepository statusRepository, MessageRepository messageRepository) {
         this.statusRepository = statusRepository;
         this.messageRepository = messageRepository;
+    }
+
+    @Transactional
+    public void checkServiceStatus(Status status) {
+        if (statusRepository.existsById(status.getServiceId())) {
+            statusRepository.deleteStatusByServiceId(status.getServiceId());
+        }
+            statusRepository.save(status);
     }
 
     public List<Status> getAllRegisteredServices() {
@@ -56,7 +65,7 @@ public class MessageService {
     }
 
     public void putMessage(Message message) {
-        if (!statusRepository.existsById(message.getServiceId().getServiceId())) {
+        if (statusRepository.existsById(message.getServiceId().getServiceId())) {
             log.info("Добавление сообщения для сервиса с id: {}", message.getServiceId().getServiceId());
             messageRepository.save(message);
         }

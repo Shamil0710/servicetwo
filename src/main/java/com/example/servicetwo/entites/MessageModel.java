@@ -8,8 +8,10 @@ import java.io.Serializable;
 @Data
 public class MessageModel implements Serializable {
     @JsonProperty("serviceId")
-    private int serviceId;
+    private Long serviceId;
     @JsonProperty("status")
     private String status;
+    @JsonProperty("massage")
+    private String massage;
 }
 

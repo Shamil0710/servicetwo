@@ -1,12 +1,15 @@
 package com.example.servicetwo.entites;
 
 import javax.persistence.*;
+
+import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 @Entity
 @Table(name = "messages")
 public class Message {
@@ -21,8 +24,20 @@ public class Message {
     private Status serviceId;
 
     @Column(name = "messages")
-    private String message;
+    private String messages;
 
     @Column(name = "time_stamp")
     private LocalDateTime timeStamp;
+
+    public static Message fromMessageModel(MessageModel messageModel) { ;
+        Status status = Status.builder()
+                .serviceId(messageModel.getServiceId())
+                .build();
+        Message message = Message.builder()
+                .serviceId(status)
+                .messages(messageModel.getMassage())
+                .timeStamp(LocalDateTime.now())
+                .build();
+        return message;
+    }
 }
