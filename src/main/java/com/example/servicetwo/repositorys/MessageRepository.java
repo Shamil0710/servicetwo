@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
     List<Message> findMessageByServiceId_ServiceId(Long id);
+    List<Message> findByServiceIdIn(Long Id);
 }

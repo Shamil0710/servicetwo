@@ -33,7 +33,7 @@ public class MessageController {
     @GetMapping("/{id}")
     @Operation(summary = "Get message by id")
     public List<Message> getMessageById(@PathVariable Long id) {
-        return messageService.getMessageById(id).orElseThrow(()
+        return messageService.getMessageByServiceId(id).orElseThrow(()
                 -> new MessageNotFoundException("Сообщение не найдено"));
     }
 

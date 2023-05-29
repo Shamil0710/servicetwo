@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @Entity
-@Table(name = "messages")
+@Table(name = "messages", schema = "neeastestdb")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,11 +33,10 @@ public class Message {
         Status status = Status.builder()
                 .serviceId(messageModel.getServiceId())
                 .build();
-        Message message = Message.builder()
+        return Message.builder()
                 .serviceId(status)
                 .messages(messageModel.getMassage())
                 .timeStamp(LocalDateTime.now())
                 .build();
-        return message;
     }
 }

@@ -22,8 +22,9 @@ public class RabbitConsumer {
 
     @RabbitListener(queues = "test-queue")
     public void handleMessage(MessageModel message) throws IOException {
-        log.debug(message);
         messageService.checkServiceStatus(Status.fromMessageModel(message));
-        messageService.putMessage(Message.fromMessageModel(message));
+        if (message.getMassage() != null) {
+            messageService.putMessage(Message.fromMessageModel(message));
+        }
     }
 }

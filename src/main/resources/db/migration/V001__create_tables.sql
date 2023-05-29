@@ -9,7 +9,7 @@ create table if not exists neeastestdb.statuses
 create table if not exists neeastestdb.messages
 (
     message_id BIGSERIAL primary key,
-    service_id BIGINT NOT NULL references neeastestdb.statuses (service_id) ON DELETE CASCADE,
+    service_id BIGINT NOT NULL references neeastestdb.statuses (id) ON DELETE CASCADE,
     messages   VARCHAR,
     time_stamp timestamp
 );

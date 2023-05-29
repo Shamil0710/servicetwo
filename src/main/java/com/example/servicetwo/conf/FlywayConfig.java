@@ -1,28 +1,36 @@
 package com.example.servicetwo.conf;
 
 import org.flywaydb.core.Flyway;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
 public class FlywayConfig {
+    @Value("${spring.jpa.properties.hibernate.dialect}")
+    private String driverClassName;
+    @Value("${spring.datasource.url}")
+    private String url;
+    @Value("${spring.datasource.username}")
+    private String userName;
+    @Value("${spring.datasource.password}")
+    private String password;
+
     @Bean(initMethod = "migrate")
     public Flyway flyway() {
-        Flyway flyway = Flyway.configure()
+        return Flyway.configure()
                 .dataSource(dataSource())
-                .locations("classpath:db/migration")
                 .load();
-        return flyway;
     }
 
     @Bean
     public DriverManagerDataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/neeastestdb");
-        dataSource.setUsername("admin");
-        dataSource.setPassword("admin");
+        dataSource.setDriverClassName(driverClassName);
+        dataSource.setUrl(url);
+        dataSource.setUsername(userName);
+        dataSource.setPassword(password);
         return dataSource;
     }
 

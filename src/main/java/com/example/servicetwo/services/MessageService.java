@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,10 +28,12 @@ public class MessageService {
 
     @Transactional
     public void checkServiceStatus(Status status) {
-        if (statusRepository.existsById(status.getServiceId())) {
-            statusRepository.deleteStatusByServiceId(status.getServiceId());
-        }
+        if (statusRepository.existsStatusByServiceId(status.getServiceId())) {
+            log.info(status.getServiceStatus());
+            statusRepository.updateStatus(status.getServiceStatus(), LocalDateTime.now(), status.getServiceId());
+        } else {
             statusRepository.save(status);
+        }
     }
 
     public List<Status> getAllRegisteredServices() {
@@ -43,10 +46,10 @@ public class MessageService {
         return statusRepository.getServiceIdsWithActivityStatus();
     }
 
-    public Optional<List<Message>> getMessageById(Long id) {
-        if (statusRepository.existsById(id)) {
+    public Optional<List<Message>> getMessageByServiceId(Long id) {
+        if (statusRepository.existsStatusByServiceId(id)) {
             log.info("Получение информации о сервисе id: {}", id);
-            return Optional.of(messageRepository.findMessageByServiceId_ServiceId(id));
+            return Optional.of(messageRepository.findByServiceIdIn(id));
         } else return Optional.empty();
     }
 
@@ -65,8 +68,9 @@ public class MessageService {
     }
 
     public void putMessage(Message message) {
-        if (statusRepository.existsById(message.getServiceId().getServiceId())) {
+        if (statusRepository.existsStatusByServiceId((message.getServiceId().getServiceId()))) {
             log.info("Добавление сообщения для сервиса с id: {}", message.getServiceId().getServiceId());
+            message.setServiceId(statusRepository.getStatusesByServiceId(message.getServiceId().getServiceId()));
             messageRepository.save(message);
         }
     }
